@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 function LoginPage() {
   const onSuccess = (response) => {
     console.log('onSuccess ', response);
-    history.push('/searchpage');
+    history.push('/searchpage', response);
   };
   const onFailure = (response) => console.error('error', response);
   let history = useHistory();
