@@ -1,10 +1,20 @@
 import { client } from './api';
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+};
 class IndicinaServices {
   static async postAuthentication(code) {
-    const result = await client.post(`/dev/auth`, code);
-    console.log('result data', result);
-    return result;
+    let result;
+    await client
+      .post(`/dev/auth`, code)
+      .then((resp) => {
+        console.log(`response POST ${resp}`);
+        result = resp;
+      })
+      .catch((error) => console.log('error', error));
+    console.log('result data', result.data.data);
+    return result.data.data;
   }
 }
 

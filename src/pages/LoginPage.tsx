@@ -13,7 +13,7 @@ function LoginPage() {
     // <React.Fragment>
     <div>
       <LoginGithub
-        clientId='4f262cc9e20d3043da02'
+        clientId={process.env.REACT_APP_CLIENT_ID}
         onSuccess={onSuccess}
         onFailure={onFailure}
         buttonText='Login to Github'
