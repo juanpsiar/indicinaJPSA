@@ -1,30 +1,21 @@
 import { useQuery, gql } from '@apollo/client';
 
-// const REPOSITORY_ISSUES = gql`
-//   query {
-//     repository($owner: String!) {
-//       issues(last: 20, states: CLOSED) {
-//         edges {
-//           node {
-//             title
-//             url
-//           }
-//         }
-//       }
-//     }
-//   }
-// `;
-
-const SEARCH_REPOS = gql`
+export const SEARCH_REPOS = gql`
   query ($queryString: String!) {
-    search(first: 10, query: $queryString, type: REPOSITORY) {
+    search(first: 100, query: $queryString, type: REPOSITORY) {
       repositoryCount
       nodes {
         ... on Repository {
           name
-          nameWithOwner
-          owner {
-            login
+          description
+          licenseInfo {
+            name
+          }
+          primaryLanguage {
+            name
+          }
+          latestRelease {
+            updatedAt
           }
         }
       }
@@ -32,23 +23,54 @@ const SEARCH_REPOS = gql`
   }
 `;
 
-function GithubGraphql(searchText) {
-  //const { loadingR, errorR, dataR } = useQuery(REPOSITORY_ISSUES);
-  console.log('search text', searchText);
-  const { loading, error, data } = useQuery(SEARCH_REPOS, {
-    variables: { queryString: `name:${searchText.searchText}` },
-  });
-  const respositoryIssues = data.search.nodes;
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+export const SEARCH_USERS = gql`
+  query ($queryString: String!) {
+    search(first: 100, query: $queryString, type: USER) {
+      userCount
+      nodes {
+        ... on User {
+          name
+          email
+          bio
+          login
+        }
+      }
+    }
+  }
+`;
 
-  console.log('data.repository', respositoryIssues);
+// function GithubGraphql(searchText) {
+//   //const { loadingR, errorR, dataR } = useQuery(REPOSITORY_ISSUES);
+//   console.log('search text', searchText);
+//   // const { loading, error, data } = useQuery(SEARCH_REPOS, {
+//   //   variables: { queryString: `name:${searchText.searchText}` },
+//   // });
+//   const { loading, error, data } = useQuery(SEARCH_USERS, {
+//     variables: { queryString: `login:${searchText.searchText}` },
+//   });
 
-  return respositoryIssues.map((issueedge, index) => (
-    <div key={index}>
-      <p>{issueedge.name}</p>
-    </div>
-  ));
-}
+//   let repositories = [];
 
-export default GithubGraphql;
+//   if (loading) return <p>Loading...</p>;
+//   if (error) return <p>Error :(</p>;
+//   if (data && data.search && data.search.nodes) {
+//     repositories = data.search.nodes;
+//   }
+//   console.log('data.repository', data);
+
+//   return (
+//     <div>
+//       {repositories.length > 0 ? (
+//         repositories.map((issueedge, index) => (
+//           <div key={index}>
+//             <p>{issueedge.name}</p>
+//           </div>
+//         ))
+//       ) : (
+//         <div>There aren't result</div>
+//       )}
+//     </div>
+//   );
+// }
+
+// export default GithubGraphql;

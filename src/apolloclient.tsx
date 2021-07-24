@@ -31,16 +31,4 @@ const client = new ApolloClient({
 //   cache: new InMemoryCache(),
 // });
 
-client
-  .query({
-    query: gql`
-      query GetRates {
-        rates(currency: "USD") {
-          currency
-        }
-      }
-    `,
-  })
-  .then((result) => console.log('result GRAPHQL', result));
-
 export default client;

@@ -1,8 +1,5 @@
 import { client } from './api';
 
-const headers = {
-  'Access-Control-Allow-Origin': '*',
-};
 class IndicinaServices {
   static async postAuthentication(code) {
     let result;

@@ -3,6 +3,9 @@ import LoginGithub from 'react-login-github';
 import { useHistory } from 'react-router-dom';
 
 function LoginPage() {
+  const onRequest = (response) => {
+    console.log('onRequest ', response);
+  };
   const onSuccess = (response) => {
     console.log('onSuccess ', response);
     history.push('/searchpage', response);
@@ -16,6 +19,7 @@ function LoginPage() {
           clientId={process.env.REACT_APP_CLIENT_ID}
           onSuccess={onSuccess}
           onFailure={onFailure}
+          onRequest={onRequest}
           buttonText='Login to Github'
         />
       </div>
