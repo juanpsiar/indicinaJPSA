@@ -10,16 +10,16 @@ function LoginPage() {
   const onFailure = (response) => console.error('error', response);
   let history = useHistory();
   return (
-    // <React.Fragment>
-    <div>
-      <LoginGithub
-        clientId={process.env.REACT_APP_CLIENT_ID}
-        onSuccess={onSuccess}
-        onFailure={onFailure}
-        buttonText='Login to Github'
-      />
-    </div>
-    // </React.Fragment>
+    <React.Fragment>
+      <div>
+        <LoginGithub
+          clientId={process.env.REACT_APP_CLIENT_ID}
+          onSuccess={onSuccess}
+          onFailure={onFailure}
+          buttonText='Login to Github'
+        />
+      </div>
+    </React.Fragment>
   );
 }
 
