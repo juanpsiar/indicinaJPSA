@@ -1,78 +1,67 @@
+import React, { useEffect, useState } from 'react';
+
 import { useQuery } from '@apollo/client';
 import { SEARCH_REPOS, SEARCH_USERS } from '../services/githubgraphql.services';
 import UserGithub from './UserGithub';
-import './styles/GithubQuery.css';
 import RepoGithub from './RepoGithub';
 
 function GithubQueryRepos({ searchText, repoQuery, variables }) {
-  // const { loading, error, data } = useQuery(SEARCH_REPOS, {
-  //   variables: { queryString: `name:${searchText.searchText}` },
-  // });
-  console.log('data component', {
-    searchText,
-    repoQuery,
-    variables,
-  });
+  useEffect(() => {
+    console.log('cambios en search', searchText);
+  }, [searchText]);
+
+  const useQueryGraphQL = () => {
+    return { loading, error, data };
+  };
   const { loading, error, data } = useQuery(
     repoQuery ? SEARCH_REPOS : SEARCH_USERS,
     {
       variables: { queryString: `${variables}:${searchText.searchText}` },
     }
   );
-
-  let repositories = [];
+  let repositories;
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-  if (data && data.search && data.search.nodes) {
-    repositories = data.search.nodes;
+  if (data && data.search) {
+    repositories = data.search;
   }
-  console.log('data.repository', data);
-
-  const notFound = ``;
 
   const functionRenderComp = () => {
+    console.log('repositories', repositories);
     if (repoQuery) {
       return (
-        <div>
-          <h1>Repos</h1>
-          {repositories.map((itemGraph) => (
-            <RepoGithub repogit={itemGraph} />
+        <React.Fragment>
+          <h1 className='text-lg font-bold'>
+            {repositories.repositoryCount} repository results
+          </h1>
+
+          {repositories.nodes.map((itemGraphRepo) => (
+            <RepoGithub repogit={itemGraphRepo} />
           ))}
-        </div>
+        </React.Fragment>
       );
     } else {
       return (
-        <div>
-          <h1>Users</h1>
-          {repositories.map((itemGraph) => (
-            <UserGithub usergit={itemGraph} />
-          ))}
-        </div>
+        <React.Fragment>
+          <h1 className='text-lg font-bold'>{repositories.userCount} user</h1>
+          {repositories.nodes.map(
+            (itemGraphUser) =>
+              itemGraphUser.name && <UserGithub usergit={itemGraphUser} />
+          )}
+        </React.Fragment>
       );
     }
   };
 
   return (
-    <div className='container'>
-      {repositories.length > 0 ? (
+    <React.Fragment>
+      {repositories.nodes.length > 0 ? (
         functionRenderComp()
       ) : (
-        /* repoQuery ? (
-          (
-            <div>
-              <h1>Repos</h1> {functionRenderComp}
-            </div>
-          ) &&
-          repositories.map((itemGraph) => <RepoGithub repogit={itemGraph} />)
-        ) : (
-          <h1>Users</h1> &&
-          repositories.map((itemGraph) => <UserGithub usergit={itemGraph} />)
-        )
-      )  */
         <div>There aren't result</div>
       )}
-    </div>
+    </React.Fragment>
   );
 }
 

@@ -6,11 +6,9 @@ class IndicinaServices {
     await client
       .post(`/dev/auth`, code)
       .then((resp) => {
-        console.log(`response POST ${resp}`);
         result = resp;
       })
       .catch((error) => console.log('error', error));
-    console.log('result data', result.data.data);
     return result.data.data;
   }
 }
