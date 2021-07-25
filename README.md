@@ -1,7 +1,13 @@
-<<<<<<< HEAD
 # indicinaJPSA
-Technical Test JPSA 
-=======
+
+Technical Test JPSA
+
+# Environment variables
+
+Create a file .env and configure this variables
+REACT_APP_AUTH_DOMAIN ="https://9uj0ihoex6.execute-api.eu-west-1.amazonaws.com"
+REACT_APP_CLIENT_ID = id de cliente GitHub
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -53,4 +59,3 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
->>>>>>> Initialize project using Create React App

@@ -3,23 +3,19 @@ import LoginGithub from 'react-login-github';
 import { useHistory } from 'react-router-dom';
 
 function LoginPage() {
-  const onRequest = (response) => {
-    console.log('onRequest ', response);
-  };
   const onSuccess = (response) => {
-    console.log('onSuccess ', response);
     history.push('/searchpage', response);
   };
   const onFailure = (response) => console.error('error', response);
   let history = useHistory();
   return (
     <React.Fragment>
-      <div>
+      <div className='h-screen flex flex-col justify-center items-center'>
         <LoginGithub
+          className='text-white text-lg object-center w-1/2 border rounded-md bg-gray-600 sm:w-1/3 md:w-1/4'
           clientId={process.env.REACT_APP_CLIENT_ID}
           onSuccess={onSuccess}
           onFailure={onFailure}
-          onRequest={onRequest}
           buttonText='Login to Github'
         />
       </div>
