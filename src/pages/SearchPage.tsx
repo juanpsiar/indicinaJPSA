@@ -5,7 +5,6 @@ import githubLogo from '../images/githubLogo.svg';
 
 function LoginPage(props) {
   const code = props.location.state.code;
-  const [queryData, setQueryData] = useState({});
 
   const [searchText, setSearchText] = useState('');
   const [showResults, setShowResults] = useState(false);
@@ -13,20 +12,20 @@ function LoginPage(props) {
   const variablesRepo = 'name';
   const variablesUser = 'login';
 
-  let data;
-
   useEffect(() => {
     getAccesToken();
-  }, []);
+  }, [searchText]);
 
-  const handleChange = (event) => setSearchText(event.target.value);
+  const handleChange = (event) => {
+    setSearchText(event.target.value);
+  };
   const handleClick = () => {
     setShowResults(true);
     setShowRepos(true);
   };
 
   const getAccesToken = async () => {
-    data = await IndicinaServices.postAuthentication({ code });
+    let data = await IndicinaServices.postAuthentication({ code });
     localStorage.setItem('token', data.access_token);
   };
 

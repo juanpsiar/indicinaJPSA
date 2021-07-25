@@ -1,7 +1,7 @@
-const UserGithub = ({ usergit }) => {
+const UserGithub = ({ usergit, key }) => {
   if (usergit.name) {
     return (
-      <div className='flex flex-col bg-white my-5 border p-5 w-96'>
+      <div className='flex flex-col bg-white my-5 border p-5 w-96' key={key}>
         <div>
           <h3>{usergit.name}</h3>
 

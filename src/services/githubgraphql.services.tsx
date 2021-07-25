@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const SEARCH_REPOS = gql`
   query ($queryString: String!) {
-    search(first: 100, query: $queryString, type: REPOSITORY) {
+    search(first: 50, query: $queryString, type: REPOSITORY) {
       repositoryCount
       nodes {
         ... on Repository {
@@ -25,7 +25,7 @@ export const SEARCH_REPOS = gql`
 
 export const SEARCH_USERS = gql`
   query ($queryString: String!) {
-    search(first: 100, query: $queryString, type: USER) {
+    search(first: 50, query: $queryString, type: USER) {
       userCount
       nodes {
         ... on User {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { useQuery } from '@apollo/client';
 import { SEARCH_REPOS, SEARCH_USERS } from '../services/githubgraphql.services';
@@ -6,13 +6,6 @@ import UserGithub from './UserGithub';
 import RepoGithub from './RepoGithub';
 
 function GithubQueryRepos({ searchText, repoQuery, variables }) {
-  useEffect(() => {
-    console.log('cambios en search', searchText);
-  }, [searchText]);
-
-  const useQueryGraphQL = () => {
-    return { loading, error, data };
-  };
   const { loading, error, data } = useQuery(
     repoQuery ? SEARCH_REPOS : SEARCH_USERS,
     {
@@ -21,14 +14,11 @@ function GithubQueryRepos({ searchText, repoQuery, variables }) {
   );
   let repositories;
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
   if (data && data.search) {
     repositories = data.search;
   }
 
   const functionRenderComp = () => {
-    console.log('repositories', repositories);
     if (repoQuery) {
       return (
         <React.Fragment>
@@ -36,8 +26,8 @@ function GithubQueryRepos({ searchText, repoQuery, variables }) {
             {repositories.repositoryCount} repository results
           </h1>
 
-          {repositories.nodes.map((itemGraphRepo) => (
-            <RepoGithub repogit={itemGraphRepo} />
+          {repositories.nodes.map((itemGraphRepo, index) => (
+            <RepoGithub repogit={itemGraphRepo} id={index} />
           ))}
         </React.Fragment>
       );
@@ -46,13 +36,23 @@ function GithubQueryRepos({ searchText, repoQuery, variables }) {
         <React.Fragment>
           <h1 className='text-lg font-bold'>{repositories.userCount} user</h1>
           {repositories.nodes.map(
-            (itemGraphUser) =>
-              itemGraphUser.name && <UserGithub usergit={itemGraphUser} />
+            (itemGraphUser, index) =>
+              itemGraphUser.name && (
+                <UserGithub usergit={itemGraphUser} key={index} />
+              )
           )}
         </React.Fragment>
       );
     }
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error)
+    return (
+      <div className='flex flex-col bg-white my-5 border p-5 w-96'>
+        <label> Error :( </label>
+      </div>
+    );
 
   return (
     <React.Fragment>

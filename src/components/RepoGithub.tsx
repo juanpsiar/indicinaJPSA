@@ -1,4 +1,4 @@
-const RepoGithub = ({ repogit }) => {
+const RepoGithub = ({ repogit, id }) => {
   const checkValues = () => {
     let dataRepo = '';
     if (repogit.primaryLanguage !== null && repogit.primaryLanguage.name) {
@@ -15,7 +15,7 @@ const RepoGithub = ({ repogit }) => {
   };
 
   return (
-    <div className='flex flex-col bg-white my-5 border p-5 w-96'>
+    <div className='flex flex-col bg-white my-5 border p-5 w-96' key={id}>
       <h2 className='font-bold text-lg my-2'>{repogit.name}</h2>
       <h3 className='text-md'>{repogit.description.substring(0, 60)}... </h3>
       <div className='text-gray-600'>{checkValues()}</div>
