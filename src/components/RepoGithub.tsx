@@ -2,13 +2,21 @@ const RepoGithub = ({ repogit, id }) => {
   const checkValues = () => {
     let dataRepo = '';
     if (repogit.primaryLanguage !== null && repogit.primaryLanguage.name) {
-      dataRepo += `${repogit.primaryLanguage.name} `;
+      dataRepo += ` ${repogit.primaryLanguage.name} `;
     }
     if (repogit.licenseInfo != null && repogit.licenseInfo.name) {
-      dataRepo += `| ${repogit.licenseInfo.name} `;
+      if (dataRepo.length > 0) {
+        dataRepo += `| ${repogit.licenseInfo.name} `;
+      } else {
+        dataRepo += `${repogit.licenseInfo.name} `;
+      }
     }
     if (repogit.latestRelease && repogit.latestRelease.updatedAt) {
-      dataRepo += `| ${repogit.latestRelease.updatedAt}`;
+      if (dataRepo.length > 0) {
+        dataRepo += `| ${repogit.latestRelease.updatedAt}`;
+      } else {
+        dataRepo += ` ${repogit.latestRelease.updatedAt}`;
+      }
     }
 
     return dataRepo;

@@ -14,7 +14,7 @@ function LoginPage(props) {
 
   useEffect(() => {
     getAccesToken();
-  }, [searchText]);
+  }, []);
 
   const handleChange = (event) => {
     setSearchText(event.target.value);
@@ -26,6 +26,7 @@ function LoginPage(props) {
 
   const getAccesToken = async () => {
     let data = await IndicinaServices.postAuthentication({ code });
+    console.log('access token', data);
     localStorage.setItem('token', data.access_token);
   };
 

@@ -9,7 +9,7 @@ function GithubQueryRepos({ searchText, repoQuery, variables }) {
   const { loading, error, data } = useQuery(
     repoQuery ? SEARCH_REPOS : SEARCH_USERS,
     {
-      variables: { queryString: `${variables}:${searchText.searchText}` },
+      variables: { queryString: `${variables}:${searchText}` },
     }
   );
   let repositories;
