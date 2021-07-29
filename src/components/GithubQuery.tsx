@@ -36,25 +36,51 @@ function GithubQueryRepos({ searchText, repoQuery, variables, repoCount }) {
     if (repoQuery) {
       return (
         <React.Fragment>
-          <Pagination
-            data={repositories.nodes}
-            RenderComponent={RepoGithub}
-            title={`${repositories.repositoryCount} repository results`}
-            pageLimit={repositories.nodes.length / 10}
-            dataLimit={10}
-          />
+          {repositories.nodes.length > 10 ? (
+            <Pagination
+              data={repositories.nodes}
+              RenderComponent={RepoGithub}
+              title={`${repositories.repositoryCount} repository results`}
+              pageLimit={repositories.nodes.length / 10}
+              dataLimit={10}
+            />
+          ) : (
+            <React.Fragment>
+              <h1 className='text-lg font-bold'>
+                {repositories.repositoryCount} repository results
+              </h1>
+
+              {repositories.nodes.map((itemGraphRepo, index) => (
+                <RepoGithub data={itemGraphRepo} id={index} />
+              ))}
+            </React.Fragment>
+          )}
         </React.Fragment>
       );
     } else {
       return (
         <React.Fragment>
-          <Pagination
-            data={repositories.nodes}
-            RenderComponent={UserGithub}
-            title={`${repositories.userCount} user`}
-            pageLimit={repositories.nodes.length / 10}
-            dataLimit={10}
-          />
+          {repositories.nodes.length > 10 ? (
+            <Pagination
+              data={repositories.nodes}
+              RenderComponent={UserGithub}
+              title={`${repositories.userCount} user`}
+              pageLimit={repositories.nodes.length / 10}
+              dataLimit={10}
+            />
+          ) : (
+            <React.Fragment>
+              <h1 className='text-lg font-bold'>
+                {repositories.userCount} user
+              </h1>
+              {repositories.nodes.map(
+                (itemGraphUser, index) =>
+                  itemGraphUser.name && (
+                    <UserGithub data={itemGraphUser} id={index} />
+                  )
+              )}
+            </React.Fragment>
+          )}
         </React.Fragment>
       );
     }
