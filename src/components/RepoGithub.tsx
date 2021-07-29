@@ -1,21 +1,21 @@
-const RepoGithub = ({ repogit, id }) => {
+const RepoGithub = ({ data, id }) => {
   const checkValues = () => {
     let dataRepo = '';
-    if (repogit.primaryLanguage !== null && repogit.primaryLanguage.name) {
-      dataRepo += ` ${repogit.primaryLanguage.name} `;
+    if (data.primaryLanguage !== null && data.primaryLanguage.name) {
+      dataRepo += ` ${data.primaryLanguage.name} `;
     }
-    if (repogit.licenseInfo != null && repogit.licenseInfo.name) {
+    if (data.licenseInfo != null && data.licenseInfo.name) {
       if (dataRepo.length > 0) {
-        dataRepo += `| ${repogit.licenseInfo.name} `;
+        dataRepo += `| ${data.licenseInfo.name} `;
       } else {
-        dataRepo += `${repogit.licenseInfo.name} `;
+        dataRepo += `${data.licenseInfo.name} `;
       }
     }
-    if (repogit.latestRelease && repogit.latestRelease.updatedAt) {
+    if (data.latestRelease && data.latestRelease.updatedAt) {
       if (dataRepo.length > 0) {
-        dataRepo += `| ${repogit.latestRelease.updatedAt}`;
+        dataRepo += `| ${data.latestRelease.updatedAt}`;
       } else {
-        dataRepo += ` ${repogit.latestRelease.updatedAt}`;
+        dataRepo += ` ${data.latestRelease.updatedAt}`;
       }
     }
 
@@ -23,9 +23,9 @@ const RepoGithub = ({ repogit, id }) => {
   };
 
   return (
-    <div className='flex flex-col bg-white my-5 border p-5 w-96' key={id}>
-      <h2 className='font-bold text-lg my-2'>{repogit.name}</h2>
-      <h3 className='text-md'>{repogit.description.substring(0, 60)}... </h3>
+    <div className='flex flex-col bg-white my-5 border p-3 w-5/6' key={id}>
+      <h2 className='font-bold text-lg my-2'>{data.name}</h2>
+      <h3 className='text-md'>{data.description.substring(0, 60)}... </h3>
       <div className='text-gray-600'>{checkValues()}</div>
     </div>
   );
