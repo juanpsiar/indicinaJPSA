@@ -3,18 +3,20 @@ import IndicinaServices from '../services/Indicina.services';
 import GithubQuery from '../components/GithubQuery';
 import githubLogo from '../images/githubLogo.svg';
 
-function LoginPage(props) {
+function SearchPage(props) {
   const code = props.location.state.code;
 
   const [searchText, setSearchText] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [showRepos, setShowRepos] = useState(false);
+  const [countRepos, setCountRepos] = useState('');
+  const [countUser, setCountUser] = useState('');
   const variablesRepo = 'name';
   const variablesUser = 'login';
 
   useEffect(() => {
     getAccesToken();
-  }, [searchText]);
+  }, []);
 
   const handleChange = (event) => {
     setSearchText(event.target.value);
@@ -24,8 +26,12 @@ function LoginPage(props) {
     setShowRepos(true);
   };
 
+  const updateRepoCount = (countRepositoy) => setCountRepos(countRepositoy);
+  const updateRepoUser = (countUser) => setCountUser(countUser);
+
   const getAccesToken = async () => {
     let data = await IndicinaServices.postAuthentication({ code });
+    console.log('access token', data);
     localStorage.setItem('token', data.access_token);
   };
 
@@ -35,8 +41,8 @@ function LoginPage(props) {
         <div
           className={
             !showResults
-              ? 'h-screen flex flex-col items-center'
-              : ' flex items-center'
+              ? 'h-screen flex flex-col flex-wrap items-center'
+              : ' flex flex-wrap items-center justify-center'
           }
         >
           <div className='flex items-center m-2'>
@@ -44,7 +50,7 @@ function LoginPage(props) {
             <h2 className='text-4xl font-bold'>GitHub</h2>
           </div>
           <input
-            className='border rounded-xl h-12 border-gray-400 m-2 w-1/2 sm:w-1/2 md:w-1/2'
+            className='border rounded-xl h-12 p-1 border-gray-400 m-2 w-1/2 sm:w-1/2 md:w-1/2'
             type='text'
             onChange={(e) => handleChange(e)}
           ></input>
@@ -59,26 +65,53 @@ function LoginPage(props) {
         </div>
         {showResults && (
           <div className='flex justify-evenly bg-gray-100'>
-            <div className='flex flex-col items-center justify-center h-24 mt-14 ml-16 bg-white w-1/4'>
-              <button
+            <div className='flex flex-col m-2 justify-center w-1/4 h-28 bg-white text-sm  sm:ml-16'>
+              <div
+                className={
+                  showRepos
+                    ? 'flex m-1 items-center bg-gray-200 w-11/12'
+                    : 'flex m-1 items-center w-11/12'
+                }
                 onClick={() => setShowRepos(true)}
-                className={showRepos ? 'w-36 m-1 bg-gray-300' : 'w-36 m-1 '}
               >
-                Repositories
-              </button>
-              <button
+                <label className='w-3/5'>Repositories</label>
+                <label
+                  className={
+                    countRepos.length > 0
+                      ? 'w-2/5 border rounded-xl ml-3 p-0.5 text-center bg-gray-300'
+                      : ''
+                  }
+                >
+                  {countRepos.length > 0 ? countRepos : ''}
+                </label>
+              </div>
+              <div
+                className={
+                  !showRepos
+                    ? 'flex m-1  items-center bg-gray-200  w-11/12'
+                    : 'flex m-1  items-center w-11/12'
+                }
                 onClick={() => setShowRepos(false)}
-                className={!showRepos ? 'w-36 m-1 bg-gray-300' : 'w-36 m-1 '}
               >
-                Users
-              </button>
+                <label className='w-3/5'>Users</label>
+                <label
+                  className={
+                    countUser.length > 0
+                      ? 'w-2/5 border rounded-xl ml-3 p-0.5 text-center bg-gray-300'
+                      : ''
+                  }
+                >
+                  {countUser.length > 0 ? countUser : ''}
+                </label>
+              </div>
             </div>
-            <div className='mx-16'>
+            <div className='w-3/4 sm:mx-5 md:mx-5'>
               {showRepos && (
                 <GithubQuery
                   searchText={searchText}
                   repoQuery={true}
                   variables={variablesRepo}
+                  repoCount={updateRepoCount}
                 />
               )}
               {!showRepos && (
@@ -86,6 +119,7 @@ function LoginPage(props) {
                   searchText={searchText}
                   repoQuery={false}
                   variables={variablesUser}
+                  repoCount={updateRepoUser}
                 />
               )}
             </div>
@@ -96,4 +130,4 @@ function LoginPage(props) {
   );
 }
 
-export default LoginPage;
+export default SearchPage;
