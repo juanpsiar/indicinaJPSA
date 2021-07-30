@@ -3,7 +3,7 @@ import IndicinaServices from '../services/Indicina.services';
 import GithubQuery from '../components/GithubQuery';
 import githubLogo from '../images/githubLogo.svg';
 
-function LoginPage(props) {
+function SearchPage(props) {
   const code = props.location.state.code;
 
   const [searchText, setSearchText] = useState('');
@@ -130,4 +130,4 @@ function LoginPage(props) {
   );
 }
 
-export default LoginPage;
+export default SearchPage;
