@@ -4,7 +4,6 @@ function Pagination({ data, RenderComponent, title, pageLimit, dataLimit }) {
   const [pages] = useState(Math.round(data.length / dataLimit));
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log( data[0],  title, pageLimit, dataLimit )
   function goNextPage() {
     setCurrentPage((page) => page + 1);
   }

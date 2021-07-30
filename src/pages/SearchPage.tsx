@@ -31,7 +31,6 @@ function SearchPage(props) {
 
   const getAccesToken = async () => {
     let data = await IndicinaServices.postAuthentication({ code });
-    console.log('access token', data);
     localStorage.setItem('token', data.access_token);
   };
 
@@ -41,12 +40,20 @@ function SearchPage(props) {
         <div
           className={
             !showResults
-              ? 'h-screen flex flex-col flex-wrap items-center'
-              : ' flex flex-wrap items-center justify-center'
+              ? // ? 'h-screen flex flex-col flex-wrap items-center'
+                // : ' flex flex-wrap items-center justify-center'
+                'h-1/6 flex flex-col flex-wrap items-center'
+              : 'h-1/6 flex flex-wrap items-center justify-center'
           }
         >
-          <div className='flex items-center m-2'>
-            <img className='h-3/4' src={githubLogo} alt='github logo' />
+          <div className='flex items-center h-5/6 m-2'>
+            <img
+              className='h-3/4'
+              src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
+              alt='github logo'
+            />
+            {/* <div className='flex items-center m-2'>
+            <img className='h-3/4' src={githubLogo} alt='github logo' /> */}
             <h2 className='text-4xl font-bold'>GitHub</h2>
           </div>
           <input

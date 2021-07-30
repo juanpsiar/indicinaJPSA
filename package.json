@@ -54,6 +54,7 @@
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
     "autoprefixer": "^9.8.6",
     "enzyme": "^3.11.0",
+    "jest-css-modules-transform": "^4.3.0",
     "postcss": "^7.0.36",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.7",
     "ts-jest": "^26.4.2"
@@ -61,19 +62,18 @@
   "jest": {
     "setupFilesAfterEnv": [
       "<rootDir>/src/__test__/setupTest.js"
-    ],   
+    ],
     "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/ts-jest"
+      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/ts-jest",
+      ".+\\.(css|styl|less|sass|scss)$": "jest-css-modules-transform"
     },
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
       "^.+\\.module\\.(css|sass|scss)$"
     ],
     "moduleNameMapper": {
-      "^react-native$": "react-native-web",
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
-      "src/(.*)$": "<rootDir>/src/$1",
-      "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/styleMock.js"
+      "^@/(.*)$": "<rootDir>/$1"
     }
   }
 }

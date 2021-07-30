@@ -6,7 +6,7 @@ import UserGithub from './UserGithub';
 import RepoGithub from './RepoGithub';
 import Pagination from './Pagination';
 
-function GithubQueryRepos({ searchText, repoQuery, variables, repoCount }) {
+function GithubQuery({ searchText, repoQuery, variables, repoCount }) {
   const { loading, error, data } = useQuery(
     repoQuery ? SEARCH_REPOS : SEARCH_USERS,
     {
@@ -107,4 +107,4 @@ function GithubQueryRepos({ searchText, repoQuery, variables, repoCount }) {
   );
 }
 
-export default GithubQueryRepos;
+export default GithubQuery;
