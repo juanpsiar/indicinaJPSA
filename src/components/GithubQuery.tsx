@@ -6,7 +6,7 @@ import UserGithub from './UserGithub';
 import RepoGithub from './RepoGithub';
 import Pagination from './Pagination';
 
-function GithubQueryRepos({ searchText, repoQuery, variables, repoCount }) {
+function GithubQuery({ searchText, repoQuery, variables, repoCount }) {
   const { loading, error, data } = useQuery(
     repoQuery ? SEARCH_REPOS : SEARCH_USERS,
     {
@@ -16,7 +16,7 @@ function GithubQueryRepos({ searchText, repoQuery, variables, repoCount }) {
   let repositories;
 
   const countStyle = (counter) => {
-    let numberShowCounter = counter;
+    let numberShowCounter = counter.toString();
     if (counter > 1000) {
       numberShowCounter = `${Math.floor(counter / 1000)}k`;
     }
@@ -100,11 +100,15 @@ function GithubQueryRepos({ searchText, repoQuery, variables, repoCount }) {
         {repositories.nodes.length > 0 ? (
           functionRenderComp()
         ) : (
-          <div>There aren't result</div>
+          <div className='flex justify-center mt-10'>
+            <p className='text-green-600 font-bold text-xl'>
+              There aren't result
+            </p>
+          </div>
         )}
       </div>
     </React.Fragment>
   );
 }
 
-export default GithubQueryRepos;
+export default GithubQuery;

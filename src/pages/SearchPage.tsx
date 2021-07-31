@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import IndicinaServices from '../services/Indicina.services';
 import GithubQuery from '../components/GithubQuery';
-import githubLogo from '../images/githubLogo.svg';
 
 function SearchPage(props) {
   const code = props.location.state.code;
@@ -31,22 +30,25 @@ function SearchPage(props) {
 
   const getAccesToken = async () => {
     let data = await IndicinaServices.postAuthentication({ code });
-    console.log('access token', data);
     localStorage.setItem('token', data.access_token);
   };
 
   return (
     <React.Fragment>
-      <div className='h-screen flex flex-col '>
+      <div className='h-screen flex flex-col'>
         <div
           className={
             !showResults
               ? 'h-screen flex flex-col flex-wrap items-center'
-              : ' flex flex-wrap items-center justify-center'
+              : 'flex flex-wrap items-center justify-center'
           }
         >
           <div className='flex items-center m-2'>
-            <img className='h-3/4' src={githubLogo} alt='github logo' />
+            <img
+              className='h-16'
+              src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
+              alt='github logo'
+            />
             <h2 className='text-4xl font-bold'>GitHub</h2>
           </div>
           <input
