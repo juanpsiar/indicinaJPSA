@@ -16,7 +16,7 @@ function GithubQuery({ searchText, repoQuery, variables, repoCount }) {
   let repositories;
 
   const countStyle = (counter) => {
-    let numberShowCounter = counter;
+    let numberShowCounter = counter.toString();
     if (counter > 1000) {
       numberShowCounter = `${Math.floor(counter / 1000)}k`;
     }
@@ -100,7 +100,11 @@ function GithubQuery({ searchText, repoQuery, variables, repoCount }) {
         {repositories.nodes.length > 0 ? (
           functionRenderComp()
         ) : (
-          <div>There aren't result</div>
+          <div className='flex justify-center mt-10'>
+            <p className='text-green-600 font-bold text-xl'>
+              There aren't result
+            </p>
+          </div>
         )}
       </div>
     </React.Fragment>
